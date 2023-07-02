@@ -7,4 +7,4 @@ jobs:
        environment: development
        steps:
        - name: echo  name
-         run:  echo 'NAME:- ${{ secrets.NAME }}'
+         run:  echo 'NAME:- ${{ secrets.STAGE }}'
