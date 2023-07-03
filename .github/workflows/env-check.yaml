@@ -6,5 +6,9 @@ jobs:
        runs-on: ubuntu-latest
        environment: development
        steps:
+
        - name: echo  name
-         run:  echo 'NAME:- ${{ secrets.STAGE }}'
+         env: 
+            name: '${{ secrets.NAME }}'
+            stage: '${{ secrets.STAGE }}'
+         run:  echo 'NAME:- ${{ env.name }} STAGE: ${{ env.stage }}'
