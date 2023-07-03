@@ -34,5 +34,5 @@ jobs:
       needs: [get-run-service-url]
       runs-on: ubuntu-20.04
       steps:
-      - name: print 
+      - name: printer 
         run: echo ${{ needs.get-run-service-url.outputs.run_url }}
