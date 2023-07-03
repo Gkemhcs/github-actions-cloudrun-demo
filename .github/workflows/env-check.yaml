@@ -1,0 +1,14 @@
+name: env-check
+run-name: env-check
+on: [push]
+jobs:  
+    acess_enviroment:
+       runs-on: ubuntu-latest
+       environment: development
+       steps:
+
+       - name: echo  name
+         env: 
+            name: '${{ secrets.NAME }}'
+            stage: '${{ secrets.STAGE }}'
+         run:  echo ${{ github.actor }}
