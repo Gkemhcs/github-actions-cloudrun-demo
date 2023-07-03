@@ -3,7 +3,7 @@ run-name: output
 on: [push]
 jobs:
    get-run-service-url:
-        runs-on: ubuntu-18.04
+        runs-on: self-hosted
         permissions:
            contents: read
            id-token: write 
@@ -32,7 +32,7 @@ jobs:
           run: echo ${{ steps.url-getter.outputs.url }}
    print-url:
       needs: [get-run-service-url]
-      runs-on: ubuntu-20.04
+      runs-on: self-hosted
       steps:
       - name: printer 
         run: echo ${{ needs.get-run-service-url.outputs.run_url }}
