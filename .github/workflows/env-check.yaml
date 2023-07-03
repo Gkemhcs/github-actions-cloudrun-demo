@@ -11,4 +11,4 @@ jobs:
          env: 
             name: '${{ secrets.NAME }}'
             stage: '${{ secrets.STAGE }}'
-         run:  echo 'NAME:- ${{ env.name }} STAGE:- ${{ env.stage }}'
+         run:  echo $name
