@@ -1,0 +1,38 @@
+name: output-formatter
+run-name: output
+on: [push]
+jobs:
+   get-run-service-url:
+        runs-on: ubuntu-18.04
+        permissions:
+           contents: read
+           id-token: write 
+        outputs:
+           run_url: ${{ steps.url-getter.outputs.url }}
+        steps:
+        - name: Google Auth
+          id: auth
+          uses: 'google-github-actions/auth@v0'
+          with:
+           workload_identity_provider: '${{ secrets.WIF_PROVIDER }}' # e.g. - projects/123456789/locations/global/workloadIdentityPools/my-pool/providers/my-provider
+           service_account: '${{ secrets.WIF_SERVICE_ACCOUNT }}' # 
+        - name: set up google cloud sdk 
+          uses: 'google-github-actions/setup-gcloud@v1'
+          with:
+            version: '>= 363.0.0'
+            project_id: github-actions-demo-run
+            install_components: 'gsutil'
+        - name: url-getter 
+          id: url-getter 
+          run: | 
+
+            export URL=$(gcloud run services describe github-ci-cd --region us-central1 --format "value(status.address.url)")
+            echo "url=${URL}" >> "$GITHUB_OUTPUT"
+        - name: url-printer 
+          run: echo ${{ steps.url-getter.outputs.url }}
+   print-url:
+      needs: [get-run-service-url]
+      runs-on: ubuntu-20.04
+      steps:
+      - name: print 
+        run: echo ${{ needs.get-run-service-url.outputs.run_url }}
