@@ -1,0 +1,9 @@
+name: print-actor
+run-name: get-actro-name 
+on: [push]
+jobs:
+    print-actor:
+       runs-on: ubuntu-18.04
+       steps:
+       - name: print actor 
+         run: echo '${{ github.actor }}'
